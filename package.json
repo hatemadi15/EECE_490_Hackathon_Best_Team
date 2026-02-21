@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "axios": "^1.13.5",
+    "lucide-react": "^0.575.0",
+    "react-dropzone": "^15.0.0",
+    "recharts": "^3.7.0",
+    "tailwindcss": "^4.2.0"
+  }
+}
