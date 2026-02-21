@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell, BarChart, Bar, Legend } from 'recharts';
 import { ZoomIn, ZoomOut, Maximize } from 'lucide-react';
 
 export default function MenuMatrix({ data }) {
@@ -126,7 +126,7 @@ export default function MenuMatrix({ data }) {
             </div>
 
             {/* Legend below chart */}
-            <div className="flex justify-center gap-6 mt-2">
+            <div className="flex justify-center gap-6 mt-2 mb-8">
                 {Object.entries(QUADRANT_COLORS).map(([label, color]) => (
                     <div key={label} className="flex items-center gap-2 text-sm">
                         <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }}></div>
@@ -134,6 +134,90 @@ export default function MenuMatrix({ data }) {
                     </div>
                 ))}
             </div>
+
+            {/* Action Table */}
+            <div className="glass-card p-6 animate-fade-in-up delay-300">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Action Plan by Product</h3>
+                <div className="overflow-x-auto">
+                    <table className="min-w-full text-sm text-left text-gray-600">
+                        <thead className="bg-emerald-50 text-emerald-900 border-b border-emerald-100 uppercase text-xs">
+                            <tr>
+                                <th className="px-4 py-3 font-semibold">Product</th>
+                                <th className="px-4 py-3 font-semibold">Category</th>
+                                <th className="px-4 py-3 font-semibold">Classification</th>
+                                <th className="px-4 py-3 font-semibold">Qty %</th>
+                                <th className="px-4 py-3 font-semibold">Profit %</th>
+                                <th className="px-4 py-3 font-semibold">Recommendation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.sort((a, b) => b.profit_pct - a.profit_pct).slice(0, 50).map((p, i) => (
+                                <tr key={i} className="border-b border-gray-100 hover:bg-emerald-50/30 transition-colors">
+                                    <td className="px-4 py-3 font-medium text-gray-900">{p.product_desc || p.product}</td>
+                                    <td className="px-4 py-3">{p.macro_category}</td>
+                                    <td className="px-4 py-3">
+                                        <span className="px-2 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: `${QUADRANT_COLORS[p.classification]}20`, color: QUADRANT_COLORS[p.classification] }}>
+                                            {p.classification}
+                                        </span>
+                                    </td>
+                                    <td className="px-4 py-3">{p.popularity_pct}%</td>
+                                    <td className="px-4 py-3">{p.profit_pct}%</td>
+                                    <td className="px-4 py-3 text-xs leading-tight min-w-[250px]">{p.recommendation}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <div className="text-xs text-gray-400 mt-2 italic text-center">Showing top 50 products matching current filters</div>
+                </div>
+            </div>
+
+            {/* Modifier Insights Panel */}
+            {data.modifier_analysis && data.modifier_analysis.branch_stats && (
+                <div className="glass-card p-6 animate-fade-in-up delay-400">
+                    <div className="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 className="text-lg font-bold text-gray-800">Modifier Attachment Rates (Upsell Opportunity)</h3>
+                            <p className="text-sm text-gray-500">Percentage of total orders containing high-margin modifiers (e.g., extra shots, syups, milks).</p>
+                        </div>
+                    </div>
+                    <div className="h-[300px] w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                                data={data.modifier_analysis.branch_stats.sort((a, b) => b.attachment_rate - a.attachment_rate)}
+                                margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                <XAxis
+                                    dataKey="branch"
+                                    angle={-45}
+                                    textAnchor="end"
+                                    height={80}
+                                    interval={0}
+                                    tick={{ fontSize: 10 }}
+                                />
+                                <YAxis unit="%" />
+                                <Tooltip
+                                    formatter={(value) => [`${value}%`, 'Attachment Rate']}
+                                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                />
+                                <Bar
+                                    dataKey="attachment_rate"
+                                    name="Attachment Rate"
+                                    fill="#059669"
+                                    radius={[4, 4, 0, 0]}
+                                >
+                                    {data.modifier_analysis.branch_stats.map((entry, index) => (
+                                        <Cell
+                                            key={`cell-${index}`}
+                                            fill={entry.attachment_rate < 15 ? '#e11d48' : '#059669'}
+                                        />
+                                    ))}
+                                </Bar>
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

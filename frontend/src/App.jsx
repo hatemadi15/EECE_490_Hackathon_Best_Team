@@ -20,12 +20,23 @@ function App() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
-            <header className="bg-emerald-900 text-white p-4 shadow-md sticky top-0 z-50 flex items-center gap-3">
-                <Coffee className="w-8 h-8 text-emerald-200" />
-                <div>
-                    <h1 className="text-xl font-bold tracking-wide">STORIES COFFEE</h1>
-                    <p className="text-xs text-emerald-200 uppercase tracking-widest">Analytics Dashboard 2026</p>
+            <header className="bg-emerald-900 text-white p-4 shadow-md sticky top-0 z-50 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <Coffee className="w-8 h-8 text-emerald-200" />
+                    <div>
+                        <h1 className="text-xl font-bold tracking-wide">STORIES COFFEE</h1>
+                        <p className="text-xs text-emerald-200 uppercase tracking-widest">Analytics Dashboard 2026</p>
+                    </div>
                 </div>
+                {data && (
+                    <button
+                        onClick={() => window.print()}
+                        className="print:hidden bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                    >
+                        <Presentation className="w-4 h-4" />
+                        Export PDF
+                    </button>
+                )}
             </header>
 
             <nav className="bg-white border-b shadow-sm sticky top-[72px] z-40 overflow-x-auto">

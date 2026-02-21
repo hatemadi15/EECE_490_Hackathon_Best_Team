@@ -79,7 +79,7 @@ export default function ForecastView({ data }) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white rounded-xl shadow p-6">
+                <div className="glass-card p-6 animate-fade-in-up delay-200 hover:-translate-y-1 transition-all duration-300">
                     <h3 className="text-lg font-bold text-gray-800 mb-4">Model Metrics</h3>
                     <div className="space-y-4">
                         <div className="flex justify-between items-center border-b pb-2">
@@ -100,7 +100,7 @@ export default function ForecastView({ data }) {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow p-6">
+                <div className="glass-card p-6 animate-fade-in-up delay-200 hover:-translate-y-1 transition-all duration-300">
                     <h3 className="text-lg font-bold text-gray-800 mb-4">Top Growth Drivers</h3>
                     <div className="space-y-3">
                         {data.feature_importance?.slice(0, 5).map((feat, i) => (
@@ -129,7 +129,7 @@ export default function ForecastView({ data }) {
                 </div>
             </div>
 
-            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-6">
+            <div className="bg-emerald-50/80 backdrop-blur-sm border border-emerald-200 rounded-xl p-6 shadow-sm animate-fade-in-up delay-400">
                 <h3 className="text-lg font-bold text-emerald-900 mb-2">How this AI Model Works (Explainability)</h3>
                 <p className="text-sm text-emerald-800 leading-relaxed mb-4">
                     This demand forecast runs a <strong>LightGBM/XGBoost regressor</strong> on the monthly data. It doesn't just rely on historical averages, it integrates <span className="font-semibold text-emerald-900">Exogenous External Factors</span> to understand <em>why</em> spikes happen.

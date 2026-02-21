@@ -9,7 +9,7 @@ export default function ExecutiveSummary({ data }) {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow p-8 max-w-4xl mx-auto print:shadow-none print:p-0">
+        <div className="glass-card p-8 max-w-4xl mx-auto animate-fade-in-up print:shadow-none print:p-0">
             <div className="flex justify-between items-start border-b-2 border-emerald-900 pb-6 mb-8">
                 <div>
                     <h1 className="text-3xl font-extrabold text-emerald-900">STORIES COFFEE</h1>
