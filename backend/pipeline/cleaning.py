@@ -52,6 +52,7 @@ def clean_file4(df):
     col_category = df.columns[0]
     col_revenue = df.columns[2]
     col_cost = df.columns[4]
+    col_profit = df.columns[6]
     
     for _, row in df.iterrows():
         cat = str(row[col_category]) if pd.notna(row[col_category]) else ""
@@ -61,14 +62,18 @@ def clean_file4(df):
         elif cat.startswith("Total By Branch:"):
             try:
                 # Remove commas
-                rev_str = str(row[col_revenue]).replace(',', '')
                 cost_str = str(row[col_cost]).replace(',', '')
+                profit_str = str(row[col_profit]).replace(',', '')
                 
-                rev = float(rev_str) if rev_str.replace('.','',1).isdigit() else 0.0
-                cost = float(cost_str) if cost_str.replace('.','',1).isdigit() else 0.0
+                cost = float(cost_str) if cost_str.replace('.','',1).replace('-', '', 1).isdigit() else 0.0
+                profit = float(profit_str) if profit_str.replace('.','',1).replace('-', '', 1).isdigit() else 0.0
+                
+                # The prompt explicitly warns about a display truncation bug in the 'Total Price' column for aggregate values
+                # We calculate true revenue mathematically as Cost + Profit
+                rev = cost + profit
                 
                 if rev > 0:
-                    margin = (rev - cost) / rev
+                    margin = profit / rev
                 else:
                     margin = 0.0
                     

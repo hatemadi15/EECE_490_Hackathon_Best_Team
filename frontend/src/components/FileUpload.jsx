@@ -54,7 +54,7 @@ export default function FileUpload({ onComplete }) {
         const file = files[fileKey];
 
         return (
-            <div {...getRootProps()} className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${isDragActive ? 'border-amber-500 bg-amber-50' : 'border-gray-300 hover:border-amber-400'}`}>
+            <div {...getRootProps()} className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${isDragActive ? 'border-emerald-500 bg-emerald-50' : 'border-gray-300 hover:border-emerald-400'}`}>
                 <input {...getInputProps()} />
                 {file ? (
                     <div className="flex flex-col items-center text-emerald-600">
@@ -73,7 +73,7 @@ export default function FileUpload({ onComplete }) {
 
     return (
         <div className="bg-white rounded-xl shadow p-8 max-w-4xl mx-auto mt-10">
-            <h2 className="text-2xl font-bold text-amber-900 mb-6">Upload Historical Data</h2>
+            <h2 className="text-2xl font-bold text-emerald-900 mb-6">Upload Historical Data</h2>
             <p className="text-gray-600 mb-8">Please upload the required Point of Sale data extracts to generate insights.</p>
 
             {error && (
@@ -94,7 +94,7 @@ export default function FileUpload({ onComplete }) {
                 <button
                     onClick={handleUpload}
                     disabled={loading}
-                    className={`px-8 py-3 rounded-lg text-white font-medium text-lg transition-colors ${loading ? 'bg-amber-300 cursor-not-allowed' : 'bg-amber-600 hover:bg-amber-700'}`}
+                    className={`px-8 py-3 rounded-lg text-white font-medium text-lg transition-colors ${loading ? 'bg-emerald-300 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700'}`}
                 >
                     {loading ? 'Processing Data...' : 'Generate Dashboard'}
                 </button>
