@@ -40,7 +40,7 @@ def prepare_branch_features(file1_df, file4_df):
     grouped.rename(columns={'total_revenue': 'total_annual_revenue'}, inplace=True)
     
     # Filter out empty branches or anomalies (like '0' revenue)
-    grouped = grouped[grouped['total_annual_revenue'] > 1000]
+    grouped = grouped[grouped['total_annual_revenue'] > 0]
     
     return grouped
 

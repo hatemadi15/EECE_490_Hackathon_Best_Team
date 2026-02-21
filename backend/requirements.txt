@@ -1,11 +1,8 @@
 fastapi==0.109.0
 uvicorn==0.27.0
 python-multipart==0.0.6
-pandas==2.2.0
-numpy==1.26.3
-scikit-learn==1.4.0
-xgboost==2.0.3
-lightgbm==4.3.0
-skforecast==0.14.0
-requests==2.31.0
-pytrends==4.9.2
+pandas
+numpy
+scikit-learn
+requests
+pytrends
