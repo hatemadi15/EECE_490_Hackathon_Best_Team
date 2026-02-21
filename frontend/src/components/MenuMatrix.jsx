@@ -105,7 +105,7 @@ export default function MenuMatrix({ data }) {
 
             <div className="bg-white p-2 rounded-xl shadow h-[600px] overflow-auto custom-scrollbar relative border border-gray-100">
                 <div style={{ width: `${zoom * 100}%`, height: `${zoom * 100}%`, minWidth: '100%', minHeight: '100%' }}>
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                         <ScatterChart margin={{ top: 30, right: 30, bottom: 30, left: 30 }}>
                             <CartesianGrid />
                             <XAxis type="number" dataKey="popularity_pct" name="Popularity" unit="%" />
@@ -151,7 +151,7 @@ export default function MenuMatrix({ data }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {products.sort((a, b) => b.profit_pct - a.profit_pct).slice(0, 50).map((p, i) => (
+                            {[...products].sort((a, b) => b.profit_pct - a.profit_pct).slice(0, 50).map((p, i) => (
                                 <tr key={i} className="border-b border-gray-100 hover:bg-emerald-50/30 transition-colors">
                                     <td className="px-4 py-3 font-medium text-gray-900">{p.product_desc || p.product}</td>
                                     <td className="px-4 py-3">{p.macro_category}</td>
@@ -181,9 +181,9 @@ export default function MenuMatrix({ data }) {
                         </div>
                     </div>
                     <div className="h-[300px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                             <BarChart
-                                data={data.modifier_analysis.branch_stats.sort((a, b) => b.attachment_rate - a.attachment_rate)}
+                                data={[...data.modifier_analysis.branch_stats].sort((a, b) => b.attachment_rate - a.attachment_rate)}
                                 margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                             >
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} />

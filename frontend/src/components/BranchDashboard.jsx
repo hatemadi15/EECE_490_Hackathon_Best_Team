@@ -50,7 +50,7 @@ export default function BranchDashboard({ data }) {
                 <h3 className="text-xl font-bold mb-6 text-gray-800">Branch Performance Clusters</h3>
                 <p className="text-sm text-gray-500 mb-4">Scatter plot of Branches by Revenue vs Profit Margin</p>
                 <div className="h-96 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                         <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                             <CartesianGrid />
                             <XAxis type="number" dataKey="total_annual_revenue" name="Annual Revenue" unit="$" />
@@ -82,7 +82,7 @@ export default function BranchDashboard({ data }) {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 text-sm">
-                            {branch_data.sort((a, b) => b.total_annual_revenue - a.total_annual_revenue).map((b, i) => (
+                            {[...branch_data].sort((a, b) => b.total_annual_revenue - a.total_annual_revenue).map((b, i) => (
                                 <tr key={b.branch} className="hover:bg-gray-50">
                                     <td className="px-6 py-4 font-medium text-gray-900">{b.branch}</td>
                                     <td className="px-6 py-4">
