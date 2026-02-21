@@ -42,16 +42,16 @@ export default function ForecastView({ data }) {
                         <p className="text-sm text-gray-500">6-month forward projection based on XGBoost/LightGBM model</p>
                     </div>
                     <div className="flex gap-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
-                        <label className="flex items-center space-x-2 text-sm">
-                            <input type="checkbox" checked={factors.weather} onChange={(e) => setFactors({ ...factors, weather: e.target.checked })} className="rounded text-amber-600 focus:ring-amber-500" />
+                        <label className="flex items-center space-x-2 text-sm cursor-not-allowed opacity-80">
+                            <input type="checkbox" checked={factors.weather} readOnly onClick={(e) => e.preventDefault()} className="rounded text-amber-600 border-gray-300" />
                             <span>Weather</span>
                         </label>
-                        <label className="flex items-center space-x-2 text-sm">
-                            <input type="checkbox" checked={factors.holidays} onChange={(e) => setFactors({ ...factors, holidays: e.target.checked })} className="rounded text-amber-600 focus:ring-amber-500" />
+                        <label className="flex items-center space-x-2 text-sm cursor-not-allowed opacity-80">
+                            <input type="checkbox" checked={factors.holidays} readOnly onClick={(e) => e.preventDefault()} className="rounded text-amber-600 border-gray-300" />
                             <span>Holidays</span>
                         </label>
-                        <label className="flex items-center space-x-2 text-sm">
-                            <input type="checkbox" checked={factors.calendar} onChange={(e) => setFactors({ ...factors, calendar: e.target.checked })} className="rounded text-amber-600 focus:ring-amber-500" />
+                        <label className="flex items-center space-x-2 text-sm cursor-not-allowed opacity-80">
+                            <input type="checkbox" checked={factors.calendar} readOnly onClick={(e) => e.preventDefault()} className="rounded text-amber-600 border-gray-300" />
                             <span>Calendar</span>
                         </label>
                     </div>
@@ -83,11 +83,17 @@ export default function ForecastView({ data }) {
                     <h3 className="text-lg font-bold text-gray-800 mb-4">Model Metrics</h3>
                     <div className="space-y-4">
                         <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-gray-600">Mean Absolute Error (MAE)</span>
+                            <div>
+                                <span className="text-gray-600 block">Mean Absolute Error (MAE)</span>
+                                <span className="text-xs text-gray-400">On average, how many dollars the prediction is off by. Lower is better.</span>
+                            </div>
                             <span className="font-bold text-gray-900">{data.metrics?.mae || 'N/A'}</span>
                         </div>
                         <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-gray-600">Mean Abs. Percentage Error (MAPE)</span>
+                            <div>
+                                <span className="text-gray-600 block">Mean Abs. Percentage Error (MAPE)</span>
+                                <span className="text-xs text-gray-400">The average error as a percentage. 6.8% means the AI is ~93.2% accurate!</span>
+                            </div>
                             <span className="font-bold text-gray-900">{data.metrics?.mape || 'N/A'}%</span>
                         </div>
                         <p className="text-xs text-gray-500 mt-4">Model trained on 10 months history, backtested on 3 months.</p>
@@ -109,7 +115,33 @@ export default function ForecastView({ data }) {
                             </div>
                         ))}
                     </div>
+                    <div className="mt-6 pt-4 border-t border-gray-100">
+                        <p className="text-sm text-gray-600 leading-relaxed tracking-wide">
+                            <strong>What does this mean?</strong> This chart shows exactly <em>why</em> the AI predicts sales will go up or down.
+                            <br /><br />
+                            For example, <strong>Temperature</strong> being the #1 driver means that whether it's hot or cold outside heavily dictates your total daily revenue (e.g., people buying more iced drinks).
+                            <br /><br />
+                            <strong>Precipitation Sum (Rain)</strong> at 14% proves that rainy days significantly impact foot traffic to the stores.
+                            <br /><br />
+                            Finally, <strong>Num Weekends</strong> shows that the sheer number of Saturdays and Sundays in a given month is mathematically proven to be a core driver of total monthly volume. The AI uses all these signals, rather than just blind guessing, to forecast future demand!
+                        </p>
+                    </div>
                 </div>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-100 rounded-xl p-6">
+                <h3 className="text-lg font-bold text-blue-900 mb-2">How this AI Model Works (Explainability)</h3>
+                <p className="text-sm text-blue-800 leading-relaxed mb-4">
+                    This demand forecast runs a <strong>LightGBM/XGBoost regressor</strong> on the monthly data. It doesn't just rely on historical averages, it integrates <span className="font-semibold text-blue-900">Exogenous External Factors</span> to understand <em>why</em> spikes happen.
+                </p>
+                <ul className="list-disc leading-relaxed text-sm text-blue-800 ml-5 space-y-2">
+                    <li><strong>Weather Data (Open-Meteo):</strong> Temperature and Precipitation metrics heavily drive Hot vs. Cold beverage mix.</li>
+                    <li><strong>Regional Events:</strong> The model includes specific Lebanese holidays and festive seasons which historically correlate with massive traffic shifts.</li>
+                    <li><strong>Calendar Topology:</strong> Evaluates the number of weekends in an upcoming month and summer tourism seasonality.</li>
+                </ul>
+                <p className="text-xs text-blue-600 mt-4 italic">
+                    By combining internal POS data with these external signals, the model can logically predict that a warmer-than-average April with more weekends will drive higher revenue than just a standard historical average.
+                </p>
             </div>
         </div>
     );

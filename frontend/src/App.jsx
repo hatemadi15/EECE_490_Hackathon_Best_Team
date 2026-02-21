@@ -38,10 +38,10 @@ function App() {
                                     onClick={() => !item.disabled && setActiveTab(item.id)}
                                     disabled={item.disabled}
                                     className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === item.id
-                                            ? 'border-amber-600 text-amber-800'
-                                            : item.disabled
-                                                ? 'border-transparent text-gray-300 cursor-not-allowed'
-                                                : 'border-transparent text-gray-600 hover:text-amber-700 hover:bg-gray-50'
+                                        ? 'border-amber-600 text-amber-800'
+                                        : item.disabled
+                                            ? 'border-transparent text-gray-300 cursor-not-allowed'
+                                            : 'border-transparent text-gray-600 hover:text-amber-700 hover:bg-gray-50'
                                         }`}
                                 >
                                     <Icon className="w-4 h-4" />
@@ -60,7 +60,7 @@ function App() {
                         setActiveTab('branches');
                     }} />
                 )}
-                {activeTab === 'branches' && <BranchDashboard data={data} />}
+                {activeTab === 'branches' && <BranchDashboard data={data?.clustering} />}
                 {activeTab === 'menu' && <MenuMatrix data={data?.menu_engineering} />}
                 {activeTab === 'forecast' && <ForecastView data={data?.forecast} />}
                 {activeTab === 'summary' && <ExecutiveSummary data={data} />}

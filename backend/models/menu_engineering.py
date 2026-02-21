@@ -30,6 +30,9 @@ def classify_products(file2_df, scope="global"):
         0
     ).round(2)
     
+    # Clip extreme outliers so the visual chart doesn't aggressively skew
+    product_agg["profit_pct"] = np.clip(product_agg["profit_pct"], a_min=-100.0, a_max=150.0)
+    
     # Calculate Popularity Percentage based on standard BCG logic (Item Qty / Total Qty)
     total_qty = product_agg["total_qty"].sum()
     if total_qty > 0:
@@ -62,11 +65,19 @@ def classify_products(file2_df, scope="global"):
             
     product_agg["classification"] = product_agg.apply(classify, axis=1)
     
+    # Generate explicit reasons for the category placement
+    def generate_reason(row):
+        pop_status = "High Volume" if row["popularity_pct"] >= pop_threshold else "Low Volume"
+        prof_status = "High Margin" if row["profit_pct"] >= profit_threshold else "Low Margin"
+        return f"Placed as {row['classification']} because it is {pop_status} & {prof_status}."
+
+    product_agg["reason"] = product_agg.apply(generate_reason, axis=1)
+    
     RECOMMENDATIONS = {
-        "Star": "Maintain high quality, feature prominently. Highly visible placement.",
-        "Plowhorse": "High volume, low margin. Target for a 3-5% price increase. Do not alter perceived value.",
-        "Puzzle": "High margin, low volume. Promote heavily via staff upselling or rename on menu.",
-        "Dog": "Low volume, low margin. Phase out to reduce inventory costs and streamline operations."
+        "Star": "PRICING: Premium. Action: Increase price by 2-5% to maximize margin. Feature prominently.",
+        "Plowhorse": "PRICING: Value. Action: Target 3-5% price increase or subtly reduce portion sizes. Do not alter perceived value.",
+        "Puzzle": "PRICING: Discount/Combo. Action: Promote heavily via staff upselling or rename on menu.",
+        "Dog": "PRICING: Evaluate. Action: Phase out to reduce inventory costs and streamline operations."
     }
     product_agg["recommendation"] = product_agg["classification"].map(RECOMMENDATIONS)
     

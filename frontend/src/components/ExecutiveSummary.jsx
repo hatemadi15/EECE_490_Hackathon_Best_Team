@@ -38,10 +38,10 @@ export default function ExecutiveSummary({ data }) {
                             <strong>Branch Segmentation:</strong> Your 25 branches group into distinct operational profiles based on revenue vs. profit margin variance. This reveals that uniform menu pricing leaves money on the table in premium or highly seasonal locations.
                         </li>
                         <li>
-                            <strong>Menu Engineering (Plowhorses):</strong> {data.menu_engineering?.global_matrix?.summary?.plowhorses || 'Several'} high-volume items have below-median margins. A 3-5% price increase on these specific items would significantly lift aggregate profit with minimal volume bleed.
+                            <strong>Menu Engineering (Plowhorses):</strong> {data.menu_engineering?.global_matrix?.summary?.plowhorses || 'Several'} high-volume items across the Food & Beverage categories have below-median margins. A 3-5% price increase on these specific items would significantly lift aggregate profit with minimal volume bleed.
                         </li>
                         <li>
-                            <strong>Menu Complexity (Dogs):</strong> {data.menu_engineering?.global_matrix?.summary?.dogs || 'Numerous'} items are both low volume and low margin. These items slow down barista efficiency and increase COGS waste.
+                            <strong>Menu Complexity (Dogs):</strong> {data.menu_engineering?.global_matrix?.summary?.dogs || 'Numerous'} specific Food & Beverage items are both low volume and low margin. These items slow down barista efficiency and increase COGS waste.
                         </li>
                         <li>
                             <strong>Demand Forecasting:</strong> Future sales trajectories over the next 6 months are strongly influenced by weather patterns and calendar holidays.

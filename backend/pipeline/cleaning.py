@@ -101,11 +101,18 @@ def clean_file2(df):
     col_profit = df.columns[6]
     
     products = []
+    current_category = "OTHER"
     
     for _, row in df.iterrows():
         desc = str(row[col_desc]).strip() if pd.notna(row[col_desc]) else ""
         qty_str = str(row[col_qty]).replace(',', '') if pd.notna(row[col_qty]) else ""
         
+        # Update Category Tracking (rows where desc exists but qty is empty and no Total)
+        if desc and not qty_str and "Total By" not in desc:
+            # Check if this looks like a top-level category like BEVERAGES, FOOD, MERCHANDISE
+            if desc.isupper():
+                current_category = desc
+                
         # Check if qty is a number (identifying a product row)
         if desc and qty_str.replace('.', '', 1).isdigit() and "Total By" not in desc:
             try:
@@ -127,6 +134,7 @@ def clean_file2(df):
                 
                 products.append({
                     "product_desc": desc,
+                    "category": current_category,
                     "qty": qty,
                     "total_price": price,
                     "total_cost": cost,
