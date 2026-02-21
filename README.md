@@ -22,24 +22,66 @@ Locally Hosted at `http://localhost:5173`
 
 ## 🚀 Quick Start
 
-### Backend
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
+### 📋 Prerequisites
+- Python 3.10+
+- Node.js 18+ (for local frontend)
+- Docker & Docker Compose (for containerized deployment)
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
+### 🐳 Option 1: Docker (Recommended)
+The easiest way to run the entire stack (Frontend + Backend) is using Docker Compose.
 
-### Docker
 ```bash
+# From the root directory
 docker-compose up --build
 ```
+- The **Frontend Dashboard** will be available at `http://localhost:5173`
+- The **Backend API** will be available at `http://localhost:8000`
+
+### 💻 Option 2: Local Development
+
+#### 1. Start the Backend (FastAPI)
+```bash
+cd backend
+
+# Create and activate a virtual environment (Windows)
+python -m venv venv
+.\venv\Scripts\activate
+
+# For Mac/Linux:
+# python3 -m venv venv
+# source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the server
+uvicorn main:app --reload
+```
+The backend expects to run on `http://localhost:8000`.
+
+#### 2. Start the Frontend (React + Vite)
+Open a **new** terminal window:
+```bash
+cd frontend
+
+# Install Node modules
+npm install
+
+# Start the Vite development server
+npm run dev
+```
+The frontend will run on `http://localhost:5173` (or 5174 if the port is busy).
+
+### 🎯 How to Use the Dashboard
+1. Open the Frontend URL in your browser.
+2. You will be greeted by the **Upload Data** screen.
+3. Drag and drop the 4 required Stories Coffee CSV files into their respective dropzones:
+   - **File 1:** Monthly Sales SMRY (`REP_S_00134_SMRY.csv`)
+   - **File 2:** Product Profitability (`rep_s_00014_SMRY.csv`)
+   - **File 3:** Sales by Product Groups (`rep_s_00191_SMRY-3.csv`)
+   - **File 4:** Category Profit Summary (`rep_s_00673_SMRY.csv`)
+4. Once all 4 files show a green checkmark, click **Generate Dashboard**.
+5. Navigate through the tabs to view the automated K-Means Clustering, BCG Action Plan, and Demand Forecast!
 
 ## 📊 Key Findings
 1. **Branch Clustering Insights:** High volume branches (e.g., Stories Verdun) operate fundamentally differently from seasonal locations (e.g., Faqra). We've isolated the highest-margin models and automatically replicate strategy recommendations.
