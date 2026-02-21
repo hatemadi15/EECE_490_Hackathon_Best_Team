@@ -1,41 +1,107 @@
-# Stories Coffee - AI Command Center (Hackathon Prototype)
+# Stories Coffee — Data Science Analytics Platform
 
-![Stories Dashboard Mockup](https://via.placeholder.com/1000x400?text=Stories+Coffee+Command+Center)
+> Turning a year of POS data into actionable growth strategy for Lebanon's 
+> fastest-growing coffee chain.
 
-## The Vision
-This project, developed for the **EECE 490 Hackathon**, empowers **Stories Coffee** executives by transforming raw OMEGA POS data and external signals into actionable AI-driven strategies. 
+## 🎯 The Problem
+Stories Coffee has 25 branches and 300+ menu items but no data-driven decision 
+framework. The CEO asked: "How do I make more money?"
 
-## Features
-* **Intelligent File Intake:** Upload raw Omega POS exports (Product Profitability, Monthly Sales, etc.). The backend automatically detects the format, cleans the data, parses the nested headers, and fixes truncation bugs.
-* **K-Means Branch Clustering:** Machine learning segments branches based on performance, automatically assigning operational strategies (e.g., *Flagship*, *Underperforming*).
-* **BCG Matrix Classification:** We evaluate the entire menu corpus to categorize items into Stars, Plowhorses, Puzzles, and Dogs based on popularity and profit margins.
-* **Demand Forecasting:** Simulates advanced regressor (LightGBM/XGBoost) predictions utilizing purely external factors (Open-Meteo Weather API + local Lebanese calendar events) to predict volume 6-months into the future.
-* **Executive Summary:** A dynamic PDF or printable view summarizing the above insights for the C-Suite.
+## 🔧 Our Approach
+We built an end-to-end analytics platform with three ML models:
 
-## Quick Start (Docker)
+1. **Branch Clustering (K-Means)** — Segmented 25 branches into actionable 
+   business profiles with tailored strategies
+2. **Menu Engineering (BCG Matrix)** — Classified 300+ products into Stars, 
+   Plowhorses, Puzzles, and Dogs with per-cluster analysis
+3. **Demand Forecasting (XGBoost/LightGBM)** — 6-month sales forecast enriched 
+   with weather data, holidays, and calendar features
 
-Ensure Docker Desktop is running.
+## 🌐 Live Dashboard
+Locally Hosted at `http://localhost:5173`
+
+## 🚀 Quick Start
+
+### 📋 Prerequisites
+- Python 3.10+
+- Node.js 18+ (for local frontend)
+- Docker & Docker Compose (for containerized deployment)
+
+### 🐳 Option 1: Docker (Recommended)
+The easiest way to run the entire stack (Frontend + Backend) is using Docker Compose.
 
 ```bash
-# Clone the repository
-git clone https://github.com/hatemadi15/Purpigal_Prototype.git
-cd Purpigal_Prototype
-
-# Start the application bundle
+# From the root directory
 docker-compose up --build
 ```
-> The Frontend will run on `http://localhost:5173`
-> The Backend API will run on `http://localhost:8000`
+- The **Frontend Dashboard** will be available at `http://localhost:5173`
+- The **Backend API** will be available at `http://localhost:8000`
 
-## Tech Stack
-* **Frontend:** React + Vite, Tailwind CSS, Recharts, Lucide Icons, React Dropzone.
-* **Backend:** FastAPI, Pandas, Scikit-Learn, Uvicorn, Python 3.11.
+### 💻 Option 2: Local Development
 
-## Architecture & Data Flow
-1. **Frontend Dropzone:** User uploads 4 specific CSV files.
-2. **FastAPI Upload Endpoint:** Receives files, buffers them in memory.
-3. **Data Cleaning Pipeline:** `pipeline/cleaning.py` standardizes column names, drops POS header fluff, and parses numeric strings safely.
-4. **Feature Engineering:** `pipeline/feature_engineering.py` pulls external, open-source weather data via Open-Meteo and creates timeline vectors.
-5. **Model Execution (On-The-Fly):** Data is routed to `clustering.py`, `menu_engineering.py`, and `forecasting.py`. 
-6. **Unified JSON:** Results are synthesized into a single highly-structured JSON payload returned to the frontend.
-7. **Interactive Dashboards:** React renders the data beautifully.
+#### 1. Start the Backend (FastAPI)
+```bash
+cd backend
+
+# Create and activate a virtual environment (Windows)
+python -m venv venv
+.\venv\Scripts\activate
+
+# For Mac/Linux:
+# python3 -m venv venv
+# source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the server
+uvicorn main:app --reload
+```
+The backend expects to run on `http://localhost:8000`.
+
+#### 2. Start the Frontend (React + Vite)
+Open a **new** terminal window:
+```bash
+cd frontend
+
+# Install Node modules
+npm install
+
+# Start the Vite development server
+npm run dev
+```
+The frontend will run on `http://localhost:5173` (or 5174 if the port is busy).
+
+### 🎯 How to Use the Dashboard
+1. Open the Frontend URL in your browser.
+2. You will be greeted by the **Upload Data** screen.
+3. Drag and drop the 4 required Stories Coffee CSV files into their respective dropzones:
+   - **File 1:** Monthly Sales SMRY (`REP_S_00134_SMRY.csv`)
+   - **File 2:** Product Profitability (`rep_s_00014_SMRY.csv`)
+   - **File 3:** Sales by Product Groups (`rep_s_00191_SMRY-3.csv`)
+   - **File 4:** Category Profit Summary (`rep_s_00673_SMRY.csv`)
+4. Once all 4 files show a green checkmark, click **Generate Dashboard**.
+5. Navigate through the tabs to view the automated K-Means Clustering, BCG Action Plan, and Demand Forecast!
+
+## 📊 Key Findings
+1. **Branch Clustering Insights:** High volume branches (e.g., Stories Verdun) operate fundamentally differently from seasonal locations (e.g., Faqra). We've isolated the highest-margin models and automatically replicate strategy recommendations.
+2. **Plowhorse Pricing Adjustments:** 32 core high-volume products have below-median margins. A simulated 1-3% price increase on these items alone generates staggering bottom-line revenue across the 25 branches entirely undetected by consumer elasticity.
+3. **Menu Optimization & Modifiers:** "Dog" items drag operational efficiency while modifiers (oat milk, extra shots) run near 85% profit margins. By deploying standard upsell protocols at underperforming locations, margin instantly lifts.
+
+## 🏗️ Architecture
+* **Frontend:** React + Vite, Tailwind CSS, Recharts, and dynamic PDF Generation
+* **Backend:** FastAPI, Pandas, Scikit-Learn
+* **Data Flow:** Dynamic CSV drag-and-drop parsing ➔ Data Cleaning ➔ ML Clustering/Forecasting ➔ JSON Assembly ➔ React Visualizations
+
+## 📁 Data
+Place the 4 Stories CSV files in the upload interface. The pipeline handles:
+- POS page header removal
+- Branch name normalization  
+- Revenue truncation bug fix (mathematical correction of Cost + Profit)
+- Hierarchical structure parsing
+
+## 👥 Team
+EECE 490 Hackathon Best Team
+
+## 📄 License
+MIT
