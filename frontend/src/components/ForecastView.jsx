@@ -43,15 +43,15 @@ export default function ForecastView({ data }) {
                     </div>
                     <div className="flex gap-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
                         <label className="flex items-center space-x-2 text-sm cursor-not-allowed opacity-80">
-                            <input type="checkbox" checked={factors.weather} readOnly onClick={(e) => e.preventDefault()} className="rounded text-amber-600 border-gray-300" />
+                            <input type="checkbox" checked={factors.weather} readOnly onClick={(e) => e.preventDefault()} className="rounded text-emerald-600 border-gray-300" />
                             <span>Weather</span>
                         </label>
                         <label className="flex items-center space-x-2 text-sm cursor-not-allowed opacity-80">
-                            <input type="checkbox" checked={factors.holidays} readOnly onClick={(e) => e.preventDefault()} className="rounded text-amber-600 border-gray-300" />
+                            <input type="checkbox" checked={factors.holidays} readOnly onClick={(e) => e.preventDefault()} className="rounded text-emerald-600 border-gray-300" />
                             <span>Holidays</span>
                         </label>
                         <label className="flex items-center space-x-2 text-sm cursor-not-allowed opacity-80">
-                            <input type="checkbox" checked={factors.calendar} readOnly onClick={(e) => e.preventDefault()} className="rounded text-amber-600 border-gray-300" />
+                            <input type="checkbox" checked={factors.calendar} readOnly onClick={(e) => e.preventDefault()} className="rounded text-emerald-600 border-gray-300" />
                             <span>Calendar</span>
                         </label>
                     </div>
@@ -129,17 +129,17 @@ export default function ForecastView({ data }) {
                 </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-100 rounded-xl p-6">
-                <h3 className="text-lg font-bold text-blue-900 mb-2">How this AI Model Works (Explainability)</h3>
-                <p className="text-sm text-blue-800 leading-relaxed mb-4">
-                    This demand forecast runs a <strong>LightGBM/XGBoost regressor</strong> on the monthly data. It doesn't just rely on historical averages, it integrates <span className="font-semibold text-blue-900">Exogenous External Factors</span> to understand <em>why</em> spikes happen.
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-6">
+                <h3 className="text-lg font-bold text-emerald-900 mb-2">How this AI Model Works (Explainability)</h3>
+                <p className="text-sm text-emerald-800 leading-relaxed mb-4">
+                    This demand forecast runs a <strong>LightGBM/XGBoost regressor</strong> on the monthly data. It doesn't just rely on historical averages, it integrates <span className="font-semibold text-emerald-900">Exogenous External Factors</span> to understand <em>why</em> spikes happen.
                 </p>
-                <ul className="list-disc leading-relaxed text-sm text-blue-800 ml-5 space-y-2">
+                <ul className="list-disc leading-relaxed text-sm text-emerald-800 ml-5 space-y-2">
                     <li><strong>Weather Data (Open-Meteo):</strong> Temperature and Precipitation metrics heavily drive Hot vs. Cold beverage mix.</li>
                     <li><strong>Regional Events:</strong> The model includes specific Lebanese holidays and festive seasons which historically correlate with massive traffic shifts.</li>
                     <li><strong>Calendar Topology:</strong> Evaluates the number of weekends in an upcoming month and summer tourism seasonality.</li>
                 </ul>
-                <p className="text-xs text-blue-600 mt-4 italic">
+                <p className="text-xs text-emerald-600 mt-4 italic">
                     By combining internal POS data with these external signals, the model can logically predict that a warmer-than-average April with more weekends will drive higher revenue than just a standard historical average.
                 </p>
             </div>

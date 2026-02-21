@@ -20,11 +20,11 @@ function App() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
-            <header className="bg-amber-900 text-white p-4 shadow-md sticky top-0 z-50 flex items-center gap-3">
-                <Coffee className="w-8 h-8 text-amber-200" />
+            <header className="bg-emerald-900 text-white p-4 shadow-md sticky top-0 z-50 flex items-center gap-3">
+                <Coffee className="w-8 h-8 text-emerald-200" />
                 <div>
                     <h1 className="text-xl font-bold tracking-wide">STORIES COFFEE</h1>
-                    <p className="text-xs text-amber-200 uppercase tracking-widest">Analytics Dashboard 2026</p>
+                    <p className="text-xs text-emerald-200 uppercase tracking-widest">Analytics Dashboard 2026</p>
                 </div>
             </header>
 
@@ -38,10 +38,10 @@ function App() {
                                     onClick={() => !item.disabled && setActiveTab(item.id)}
                                     disabled={item.disabled}
                                     className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === item.id
-                                        ? 'border-amber-600 text-amber-800'
+                                        ? 'border-emerald-600 text-emerald-800'
                                         : item.disabled
                                             ? 'border-transparent text-gray-300 cursor-not-allowed'
-                                            : 'border-transparent text-gray-600 hover:text-amber-700 hover:bg-gray-50'
+                                            : 'border-transparent text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
                                         }`}
                                 >
                                     <Icon className="w-4 h-4" />

@@ -33,6 +33,10 @@ def prepare_branch_features(file1_df, file4_df):
         'avg_margin': 'mean'
     }).reset_index()
     
+    # Clip absolute absurd margins that exist in the test dataset to prevent scatter plot distortion
+    # A coffee shop rarely runs worse than -20% margin or better than 85% margin on an aggregate annual basis
+    grouped['avg_margin'] = np.clip(grouped['avg_margin'], a_min=-0.20, a_max=0.85)
+    
     # Add dummy YoY growth between -5% and +25%
     grouped['yoy_growth'] = np.random.uniform(-0.05, 0.25, size=len(grouped))
     
@@ -90,6 +94,8 @@ def label_clusters(branch_features_df):
         
     # Analyze cluster centroids to assign meaningful names
     mapping = {}
+    used_labels = set()
+    
     for c in branch_features_df["cluster"].unique():
         subset = branch_features_df[branch_features_df["cluster"] == c]
         avg_rev = subset['total_annual_revenue'].mean()
@@ -98,14 +104,25 @@ def label_clusters(branch_features_df):
         # Simple logical labeling based on comparison to overall median
         if avg_rev > branch_features_df['total_annual_revenue'].median():
             if avg_marg > branch_features_df['avg_margin'].median():
-                mapping[c] = "Flagship (High Rev, High Margin)"
+                base_label = "Flagship (High Rev, High Margin)"
             else:
-                mapping[c] = "High Volume (High Rev, Low Margin)"
+                base_label = "High Volume (High Rev, Low Margin)"
         else:
             if avg_marg > branch_features_df['avg_margin'].median():
-                mapping[c] = "Niche/Premium (Low Rev, High Margin)"
+                base_label = "Niche/Premium (Low Rev, High Margin)"
             else:
-                mapping[c] = "Underperforming (Low Rev, Low Margin)"
+                base_label = "Underperforming (Low Rev, Low Margin)"
+                
+        # Handle duplicates if K-Means creates multiple clusters in the same quadrant
+        original_label = base_label
+        counter = 1
+        while base_label in used_labels:
+            counter += 1
+            parts = original_label.split(" (")
+            base_label = f"{parts[0]} Tier {counter} ({parts[1]}"
+            
+        used_labels.add(base_label)
+        mapping[c] = base_label
                 
     branch_features_df["cluster_label"] = branch_features_df["cluster"].map(mapping)
     return branch_features_df

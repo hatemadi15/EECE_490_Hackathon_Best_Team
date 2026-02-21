@@ -75,9 +75,9 @@ export default function MenuMatrix({ data }) {
                 </div>
                 <div className="flex gap-4 items-center">
                     <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg mr-2">
-                        <button onClick={() => setZoom(z => Math.max(1, z - 0.5))} className="p-1.5 bg-white border rounded shadow-sm text-gray-600 hover:text-amber-600"><ZoomOut className="w-4 h-4" /></button>
+                        <button onClick={() => setZoom(z => Math.max(1, z - 0.5))} className="p-1.5 bg-white border rounded shadow-sm text-gray-600 hover:text-emerald-600"><ZoomOut className="w-4 h-4" /></button>
                         <span className="text-xs font-bold text-gray-500 px-2 w-12 text-center">{zoom * 100}%</span>
-                        <button onClick={() => setZoom(z => Math.min(5, z + 0.5))} className="p-1.5 bg-white border rounded shadow-sm text-gray-600 hover:text-amber-600"><ZoomIn className="w-4 h-4" /></button>
+                        <button onClick={() => setZoom(z => Math.min(5, z + 0.5))} className="p-1.5 bg-white border rounded shadow-sm text-gray-600 hover:text-emerald-600"><ZoomIn className="w-4 h-4" /></button>
                     </div>
                     <select
                         value={view}

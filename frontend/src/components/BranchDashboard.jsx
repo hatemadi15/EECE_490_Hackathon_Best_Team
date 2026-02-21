@@ -102,28 +102,28 @@ export default function BranchDashboard({ data }) {
                 </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-100 rounded-xl p-6">
-                <h3 className="text-lg font-bold text-blue-900 mb-4">How this AI Model Works (Explainability)</h3>
-                <p className="text-sm text-blue-800 leading-relaxed mb-6">
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-6">
+                <h3 className="text-lg font-bold text-emerald-900 mb-4">How this AI Model Works (Explainability)</h3>
+                <p className="text-sm text-emerald-800 leading-relaxed mb-6">
                     This dashboard uses <strong>K-Means Clustering</strong> to mathematically group branches into distinct behavioral segments based on Annual Revenue, Profit Margin, and Year-over-Year Growth. This allows executives to safely deploy targeted financial strategies to maximize EBITDA instead of using "one-size-fits-all" approaches:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white p-4 rounded-lg shadow-sm border border-blue-100">
+                    <div className="bg-white p-4 rounded-lg shadow-sm border border-emerald-100">
                         <h4 className="font-bold text-emerald-800 text-[13px] mb-2">Flagship (High Rev, High Margin)</h4>
                         <p className="text-xs text-gray-700 mb-2"><strong>Insight:</strong> Print money. High volume and excellent cost control.</p>
                         <p className="text-xs text-gray-700"><strong>Action:</strong> Protect volume. Reinvest in staff retention instead of aggressive pricing.</p>
                     </div>
-                    <div className="bg-white p-4 rounded-lg shadow-sm border border-blue-100">
+                    <div className="bg-white p-4 rounded-lg shadow-sm border border-emerald-100">
                         <h4 className="font-bold text-amber-800 text-[13px] mb-2">High Volume (High Rev, Low Margin)</h4>
                         <p className="text-xs text-gray-700 mb-2"><strong>Insight:</strong> Massive sales, but bleeding profit (e.g., waste or low-margin mix).</p>
                         <p className="text-xs text-gray-700"><strong>Action:</strong> Implement small 2%-5% price hikes; margin recovery goes straight to the bottom line.</p>
                     </div>
-                    <div className="bg-white p-4 rounded-lg shadow-sm border border-blue-100">
+                    <div className="bg-white p-4 rounded-lg shadow-sm border border-emerald-100">
                         <h4 className="font-bold text-purple-800 text-[13px] mb-2">Niche/Premium (Low Rev, High Margin)</h4>
                         <p className="text-xs text-gray-700 mb-2"><strong>Insight:</strong> Sells high-profit items but lacks raw foot traffic.</p>
                         <p className="text-xs text-gray-700"><strong>Action:</strong> Invest localized marketing dollars specifically into these neighborhoods.</p>
                     </div>
-                    <div className="bg-white p-4 rounded-lg shadow-sm border border-blue-100">
+                    <div className="bg-white p-4 rounded-lg shadow-sm border border-emerald-100">
                         <h4 className="font-bold text-rose-800 text-[13px] mb-2">Underperforming (Low Rev, Low Margin)</h4>
                         <p className="text-xs text-gray-700 mb-2"><strong>Insight:</strong> Actively draining company resources and footprint value.</p>
                         <p className="text-xs text-gray-700"><strong>Action:</strong> Conduct immediate operational audit; evaluate bad leases for closure.</p>
