@@ -1,58 +1,41 @@
-# Stories Coffee — Data Science Analytics Platform
+# Stories Coffee - AI Command Center (Hackathon Prototype)
 
-> Turning a year of POS data into actionable growth strategy for Lebanon's 
-> fastest-growing coffee chain.
+![Stories Dashboard Mockup](https://via.placeholder.com/1000x400?text=Stories+Coffee+Command+Center)
 
-## 🎯 The Problem
-Stories Coffee has 25 branches and 300+ menu items but no data-driven decision 
-framework. The CEO asked: "How do I make more money?"
+## The Vision
+This project, developed for the **EECE 490 Hackathon**, empowers **Stories Coffee** executives by transforming raw OMEGA POS data and external signals into actionable AI-driven strategies. 
 
-## 🔧 Our Approach
-We built an end-to-end analytics platform with three ML models:
+## Features
+* **Intelligent File Intake:** Upload raw Omega POS exports (Product Profitability, Monthly Sales, etc.). The backend automatically detects the format, cleans the data, parses the nested headers, and fixes truncation bugs.
+* **K-Means Branch Clustering:** Machine learning segments branches based on performance, automatically assigning operational strategies (e.g., *Flagship*, *Underperforming*).
+* **BCG Matrix Classification:** We evaluate the entire menu corpus to categorize items into Stars, Plowhorses, Puzzles, and Dogs based on popularity and profit margins.
+* **Demand Forecasting:** Simulates advanced regressor (LightGBM/XGBoost) predictions utilizing purely external factors (Open-Meteo Weather API + local Lebanese calendar events) to predict volume 6-months into the future.
+* **Executive Summary:** A dynamic PDF or printable view summarizing the above insights for the C-Suite.
 
-1. **Branch Clustering (K-Means)** — Segmented 25 branches into actionable 
-   business profiles with tailored strategies
-2. **Menu Engineering (BCG Matrix)** — Classified 300+ products into Stars, 
-   Plowhorses, Puzzles, and Dogs with per-cluster analysis
-3. **Demand Forecasting (XGBoost/LightGBM)** — 6-month sales forecast enriched 
-   with weather data, holidays, and calendar features
+## Quick Start (Docker)
 
-## 🌐 Live Dashboard
-Local: `http://localhost:5173`
+Ensure Docker Desktop is running.
 
-## 🚀 Quick Start
-
-### Backend
 ```bash
-cd backend
-python -m venv venv
-# Windows: .\venv\Scripts\activate
-# Mac/Linux: source venv/bin/activate
-pip install -r requirements.txt
-uvicorn main:app --reload
+# Clone the repository
+git clone https://github.com/hatemadi15/Purpigal_Prototype.git
+cd Purpigal_Prototype
+
+# Start the application bundle
+docker-compose up --build
 ```
+> The Frontend will run on `http://localhost:5173`
+> The Backend API will run on `http://localhost:8000`
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## Tech Stack
+* **Frontend:** React + Vite, Tailwind CSS, Recharts, Lucide Icons, React Dropzone.
+* **Backend:** FastAPI, Pandas, Scikit-Learn, Uvicorn, Python 3.11.
 
-## 📊 Key Findings
-- **Branch Clustering:** Highlights actionable pricing and operational strategies for diverse branch formats (Urban vs. Seasonal).
-- **Menu Optimization:** A targeted 3-5% price increase selectively on "Plowhorses" offers significant revenue upside. Removing "Dog" items simplifies bar operations.
-- **Demand Forecasting:** Weather-linked predictive modeling enables much more precise inventory planning.
-
-## 🏗️ Architecture
-- **Backend:** FastAPI (Python), Pandas, Scikit-Learn, LightGBM, Skforecast
-- **Frontend:** React (Vite), Tailwind CSS, Recharts
-
-## 📁 Data
-Place the 4 Stories CSV files in the upload interface. The pipeline handles:
-- POS page header removal
-- Branch name normalization  
-- Hierarchical structure parsing
-
-## 📄 License
-MIT
+## Architecture & Data Flow
+1. **Frontend Dropzone:** User uploads 4 specific CSV files.
+2. **FastAPI Upload Endpoint:** Receives files, buffers them in memory.
+3. **Data Cleaning Pipeline:** `pipeline/cleaning.py` standardizes column names, drops POS header fluff, and parses numeric strings safely.
+4. **Feature Engineering:** `pipeline/feature_engineering.py` pulls external, open-source weather data via Open-Meteo and creates timeline vectors.
+5. **Model Execution (On-The-Fly):** Data is routed to `clustering.py`, `menu_engineering.py`, and `forecasting.py`. 
+6. **Unified JSON:** Results are synthesized into a single highly-structured JSON payload returned to the frontend.
+7. **Interactive Dashboards:** React renders the data beautifully.
