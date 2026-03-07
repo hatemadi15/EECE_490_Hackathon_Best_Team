@@ -30,9 +30,6 @@ def classify_products(file2_df, scope="global"):
         0
     ).round(2)
     
-    # Clip extreme outliers so the visual chart doesn't aggressively skew
-    product_agg["profit_pct"] = np.clip(product_agg["profit_pct"], a_min=-100.0, a_max=150.0)
-    
     # Calculate Popularity Percentage based on standard BCG logic (Item Qty / Total Qty)
     total_qty = product_agg["total_qty"].sum()
     if total_qty > 0:
